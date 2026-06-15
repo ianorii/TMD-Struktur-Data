@@ -1,0 +1,37 @@
+setelahSMA - 0
+[menjadi_dewasa]
+[power_sendiri]
+
+                 kuliah - 110
+                 [peluang_belajar]
+                 [peluang_network]
+                 [peluang_mendapat_skill]
+
+                                              kuliah_dengan_benar - 200
+                                              [dapat_pekerjaan_baik]
+                                              [memperbaiki_hidup]
+                                              [punya_value]
+
+                                                                          ipk_tinggi - 150
+                                                                          [belajar_giat]
+
+                                                                          ipk_rendah - 12
+                                                                          [tidur_mulu]
+                                                                          []
+                                              kuliah_hanya_sekedar_kuliah - 10
+                                              [kemungkinan_pengangguran] []
+                                              []
+                 kerja - 100                  []
+                 [berlatih_disiplin]          []
+                 [rutinitas_masuk_hari_kerja] []
+                 [dapat_gaji]
+
+                 menganggur - 10
+                 [serba_salah]
+                 [merenung]
+
+                 menikah - 50
+                 [ngurus_rumah]
+                 [ngurus_keluarga]
+                 [ngurus_anak]
+                 [punya_keluarga]

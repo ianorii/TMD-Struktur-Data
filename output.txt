@@ -1,0 +1,89 @@
+setelahSMA - 0
+[menjadi_dewasa]
+[power_sendiri]
+
+                kuliah - 110
+                [peluang_belajar]
+                [peluang_network]
+                [peluang_mendapat_skill]
+
+                                            kuliah_dengan_benar - 200
+                                            [dapat_pekerjaan_baik]
+                                            [memperbaiki_hidup]
+                                            [punya_value]
+
+                                                                            wirausaha - 500
+                                                                            [latihan_endurance]
+                                                                            [peluang_pendapatan_eksponensial]
+                                                                            [peluang_network]
+                                                                            [peluang_ekspansi]
+                                                                            [peluang_manfaat]
+
+                                                                                                             buka_cabang - 500
+                                                                                                             [peluang_berkembang]
+                                                                                                             [peluang_pensiun_dini]
+
+                                                                            bekerja_di_big_four - 500
+                                                                            [latihan_endurance]
+                                                                            [peluang_pendapatan_baik]
+
+                                                                            petani - 500
+                                                                            [ketenangan]
+                                                                            [peluang_cukup]
+
+                                            kuliah_hanya_sekedar_kuliah - 10
+                                            [kemungkinan_pengangguran]
+
+                                                                            pengangguran - 10
+                                                                            [banyak_waktu]
+
+                                                                            berjualan - 200
+                                                                            [mengurangi_stres]
+                                                                            [peluang_tercukupi]
+
+                kerja - 100
+                [berlatih_disiplin]
+                [rutinitas_masuk_hari_kerja]
+                [dapat_gaji]
+
+                menganggur - 10
+                [serba_salah]
+                [merenung]
+
+                                            berdagang - 200
+                                            [mengurangi_stres]
+                                            [peluang_cukup]
+
+                menikah - 50
+                [ngurus_rumah]
+                [ngurus_keluarga]
+                [ngurus_anak]
+                [punya_keluarga]
+
+                                            pasangan_ekonomi_kuat - 300
+                                            [peluang_cukup]
+                                            [peluang_konsentrasi_keluarga]
+
+                                            pasangan_ekonomi_lemah - 10
+
+setelahSMA - 0
+[menjadi_dewasa]
+[power_sendiri]
+
+                menikah - 50
+                [ngurus_rumah]
+                [ngurus_keluarga]
+                [ngurus_anak]
+                [punya_keluarga]
+
+                                 pasangan_ekonomi_lemah - 10
+
+peluang akhir yang diambil: pasangan_ekonomi_lemah
+total value: 60
+semua peluang:
+[menjadi_dewasa]
+[power_sendiri]
+[ngurus_rumah]
+[ngurus_keluarga]
+[ngurus_anak]
+[punya_keluarga]

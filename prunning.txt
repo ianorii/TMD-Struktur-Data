@@ -1,0 +1,43 @@
+void pruning(simpul* root, char option) {
+    if(root != NULL) {
+        // jika simpul root tidak kosong
+        if(root->child != NULL) {
+            // jika simpul root memiliki simpul child
+            if(root->child->sibling != NULL) {
+                // jika simpul root memiliki banyak simpul anak
+                // deklarasi simpul bantu untuk iterasi dan find untuk simpul dengan nilai value tertinggi
+                simpul* bantu = root->child;
+                simpul* find = bantu;
+
+                // loop mencari value tertinggi
+                while(bantu->sibling != root->child) {
+                    if(find->kontainer.value < bantu->kontainer.value) {
+                        // jika value bantu lebih besar dari value find
+                        find = bantu;   // inisialisasi find
+                    }
+                    // iterasi
+                    bantu = bantu->sibling;
+                }
+                if(find->kontainer.value < bantu->kontainer.value) {
+                    // jika value bantu lebih besar dari value find
+                    find = bantu;   // inisialisasi find
+                }
+
+                // mengambil value tertinggi dari simpul child pada simpul find
+                pruning(find);
+
+                // loop untuk menghapus node yang tidak digunakan / tidak dipilih
+                while(root->child != NULL && root->child->sibling != NULL) {
+                    if(root->child == find) {
+                        // jika find adalah child pertama dari root
+                        delAllList(&find->sibling->kontainer.list_tree);    // menghapus seluruh list pada node yang tidak digunakan
+                        delChild(find->sibling->kontainer.root_name, root); // menghapus node yang tidak digunakan
+                    } else {
+                        delAllList(&root->child->kontainer.list_tree);      // menghapus seluruh list pada node yang tidak digunakan
+                        delChild(root->child->kontainer.root_name, root);   // menghapus node yang tidak digunakan
+                    }
+                }
+            }
+        }
+    }
+}
