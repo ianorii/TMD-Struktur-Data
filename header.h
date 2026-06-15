@@ -20,9 +20,9 @@ typedef struct {
     elemen_space* tail;
 } list_space;
 
-void createSpace(list_space *L);
-void addSpace(int temp, list_space *L);
-void delSpace(list_space *L);
+void createSpace(list_space *L);        // PROSEDUR INISIALISASI LIST SPASI
+void addSpace(int temp, list_space *L); // PROSEDUR ADD NILAI ELEMEN (ADDLAST)
+void delSpace(list_space *L);           // PROSEDUR DELETE ELEMEN (DELLAST)
 
 
 // --------------------------------BAGIAN LIST GANDA--------------------------------
@@ -87,8 +87,8 @@ void makeTree(data_tree temp, tree *T);
 void addChild(data_tree temp, simpul* root);
 
 // -------------------PROSEDUR DELETE NODE-------------------
-void delALLTree(simpul* root);              // DELTE SEMUA NODE PADA TREE
-void delChild(char temp[], simpul* root);   // DELTE NODE CHILD BERDASARKAN NAMA NODE
+void delALLTree(simpul* root);              // DELETE SEMUA NODE PADA TREE
+void delChild(char temp[], simpul* root);   // DELETE NODE CHILD BERDASARKAN NAMA NODE
 
 // -------------------PROSEDUR PRINT TREE-------------------
 void printTreePreOrder(simpul* root, elemen_space* point);
@@ -101,14 +101,13 @@ simpul* findSimpul(char temp[], simpul* root);
 // FUNGSI CEK POHON SAMA ATAU TIDAK
 int isEqual(simpul* root1, simpul* root2);
 
-
-// --------------------- BUATAN-----------------------------
 // PROSEDUR MENGHAPUS CHILD YANG TIDAK TERPILIH
 void pruning(simpul* root, char option[]);
 
 // FUNGSI MENGHITUNG JUMLAH VALUE PADA TREE
 int sumValue(simpul* root);
 
+// PROSEDUR MENCARI SPASI TERPANJANG PADA SETIAP LEVEL (BFS)
 void BFS(list_space *L, simpul* root);
 
 // --------------------------------BAGIAN QUEUE--------------------------------
@@ -123,7 +122,7 @@ typedef struct {
     elemen_queue* last;
 } queue;
 
-void createQueue(queue *Q);
-void addQueue(simpul* node, queue *Q);
-void delQueue(queue *Q);
-int queueSize(queue Q);
+void createQueue(queue *Q);             // PROSEDUR INISIALISASI QUEUE
+void addQueue(simpul* node, queue *Q);  // PROSEDUR ADD ELEMEN QUEUE
+void delQueue(queue *Q);                // PROSEDUR DELETE ELEMEN QUEUE
+int queueSize(queue Q);                 // FUNGSI MENGHITUNG BANYAK ELEMEN PADA QUEUE

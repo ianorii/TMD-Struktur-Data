@@ -219,7 +219,6 @@ void printElemen(list L, int num) {
 }
 
 // --------------------------------BAGIAN TREE--------------------------------
-
 // PROSEDUR INISIALISASI TREE
 void makeTree(data_tree temp, tree *T) {
     // alokasi memori untuk root tree
@@ -276,16 +275,20 @@ void delALLTree(simpul* root) {
         simpul* point = root->child;
         if(point != NULL) {
             // jika root memiliki simpul anak
+
+            // menghapus list yang ada dalam simpul terlebih dahulu sebelum menghapus simpulnya
+            // loop menghapus jika memiliki banyak anak
             while(point->sibling != NULL && point->sibling != root->child) {
                 simpul* del = point;
                 point = point->sibling;
-                delAllList(&del->kontainer.list_tree);
-                delALLTree(del);
+                delAllList(&del->kontainer.list_tree);  // hapus list
+                delALLTree(del);                        // hapus simpul
             }
-            delAllList(&point->kontainer.list_tree);
-            delALLTree(point);
+            // menghapus anak terakhir / pertama jika hanya punya satu anak
+            delAllList(&point->kontainer.list_tree);    // hapus list
+            delALLTree(point);                          // hapus simpul
         }
-        delAllList(&root->kontainer.list_tree);
+        delAllList(&root->kontainer.list_tree); // hapus root setelah seluruh anaknya terhapus
         free(root);
     }
 }
@@ -313,8 +316,8 @@ void delChild(char temp[], simpul* root) {
                 
                 // loop untuk mencari simpul anak yang sesuai
                 while(hapus->sibling != root->child && ketemu == 0) {
-                    // printf("%s\n", temp);
                     if(strcmp(hapus->kontainer.root_name, temp) == 0) {
+                        // jika simpul yang dicari sudah ditemukan
                         ketemu = 1;
                     } else {
                         prev = hapus;
@@ -360,8 +363,8 @@ void delChild(char temp[], simpul* root) {
                             hapus->sibling = NULL;
                         }
                     }
-                    delAllList(&hapus->kontainer.list_tree);
-                    delALLTree(hapus);
+                    delAllList(&hapus->kontainer.list_tree);    // hapus seluruh elemen list pada simpul hapus
+                    delALLTree(hapus);                          // menghapu simpul hapus
                 } else {
                     printf("tidak ada simpul anak yang sesuai dengan masukan\n");
                 }
@@ -497,10 +500,12 @@ int isEqual(simpul* root1, simpul* root2) {
 
                     while(bantu1->sibling != root1->child) {
                         if(bantu1 != NULL && bantu2 != NULL) {
+                            // jika sesuai
                             hasil = isEqual(bantu1, bantu2);
                             bantu1 = bantu1->sibling;
                             bantu2 = bantu2->sibling;
                         } else {
+                            // jika tidak sesuai
                             hasil = 0;
                             break;
                         }
@@ -512,6 +517,7 @@ int isEqual(simpul* root1, simpul* root2) {
         }
     } else {
         if(root1 != NULL || root2 != NULL) {
+            // jika ada yang tidak sesuai
             hasil = 0;
         }
     }
@@ -635,11 +641,13 @@ void BFS(list_space *L, simpul* root) {
 }
 
 // --------------------------------BAGIAN QUEUE--------------------------------
+// PROSEDUR INISIALISASI QUEUE
 void createQueue(queue *Q) {
     (*Q).first = NULL;
     (*Q).last = NULL;
 }
 
+// PROSEDUR ADD ELEMEN QUEUE
 void addQueue(simpul* node, queue *Q) {
     elemen_queue* baru = (elemen_queue*) malloc(sizeof(elemen_queue));
     baru->node = node;
@@ -653,6 +661,7 @@ void addQueue(simpul* node, queue *Q) {
     baru = NULL;
 }
 
+// PROSEDUR DELETE ELEMEN QUEUE
 void delQueue(queue *Q) {
     elemen_queue* hapus = (*Q).first;
     if((*Q).first == (*Q).last) {
@@ -664,6 +673,7 @@ void delQueue(queue *Q) {
     free(hapus);
 }
 
+// FUNGSI MENGHITUNG BANYAK ELEMEN PADA QUEUE
 int queueSize(queue Q) {
     int ans = 0;
     if(Q.first == NULL) return ans;
