@@ -527,30 +527,48 @@ int isEqual(simpul* root1, simpul* root2) {
 // PROSEDUR MENGHAPUS CHILD YANG TIDAK TERPILIH
 void pruning(simpul* root, char option[]) {
     if(root != NULL) {
+        // jika root tidak kosong
         if(root->child != NULL) {
+            // jiak root memiliki simpul anak
             simpul* bantu = root->child;
             if(bantu->sibling == NULL) {
+                // jika root hanya memiliki satu anak
                 pruning(bantu, option);
             } else {
-                simpul* last = root->child;
-                while(last->sibling != root->child) last = last->sibling;
+                // jika memiliki banyak anak
+                simpul* last = root->child; // pointer untuk anak terakhir
+                while(last->sibling != root->child) {
+                    // loop mencari anak terakhir
+                    last = last->sibling;
+                }
+
+                // loop mengecek simpul yang terpilih
                 while(1) {
-                    simpul* cari = findSimpul(option, root->child);
+                    simpul* cari = findSimpul(option, root->child); // pointer checker
                     if(cari == NULL) {
-                        simpul* hapus = root->child;
-                        root->child = hapus->sibling;
+                        // jika pada simpul saat ini tidak ditemukan target yang dicari
+
+                        // proses menghapus simpul saat ini dan seluruh simpul anaknya
+                        simpul* hapus = root->child;    // simpul hapus menampung anak pertama
+                        root->child = hapus->sibling;   // memindahkan status anak pertama ke anak selanjutnya
                         if(root->child == last) {
+                            // jika hanya tersisa satu anak
                             last->sibling = NULL;
                         } else {
+                            // jika masih ada lebih dari satu anak
                             last->sibling = hapus->sibling;
                         }
-                        delALLTree(hapus);
+                        delALLTree(hapus);  // menghapus simpul
                     } else {
+                        // jika ditemukan pada simpul ini maka hentikan loop
                         break;
                     }
                 }
+
                 if(root->child->sibling != NULL) {
+                    // jika masih ada simpul anak lain
                     simpul* hapus;
+                    // loop menghapus simpul sisa yang tidak dilewati
                     while(root->child->sibling != last) {
                         hapus = root->child->sibling;
                         root->child->sibling = hapus->sibling;
@@ -558,8 +576,8 @@ void pruning(simpul* root, char option[]) {
                     }
                     delALLTree(root->child->sibling);
                 }
-                root->child->sibling = NULL;
-                pruning(root->child, option);
+                root->child->sibling = NULL;    // reset sibling karena hanya memiliki satu anak
+                pruning(root->child, option);   // lanjutkan pruning
             }
         }
     }
@@ -567,8 +585,10 @@ void pruning(simpul* root, char option[]) {
 
 // FUNGSI MENGHITUNG JUMLAH VALUE PADA TREE
 int sumValue(simpul* root) {
-    // jika simpul root kosong
-    if(root == NULL) return 0;
+    if(root == NULL) {
+        // jika simpul root kosong
+        return 0;
+    }
 
     // jika simpul root tidak kosong
     return root->kontainer.value + sumValue(root->child);
@@ -602,41 +622,60 @@ void printTreeList(simpul* root) {
     }
 }
 
+// PROSEDUR MENCARI SPASI TERPANJANG PADA SETIAP LEVEL (BFS)
 void BFS(list_space *L, simpul* root) {
     if(root != NULL) {
-        addSpace(0, L);
+        // jika tree tidak kosong
+        addSpace(0, L); // set 0 spasi pada root atau level pertama
         
+        // deklarasi dan inisialisasi queue untuk membantu proses iterasi
         queue Q;
         createQueue(&Q);
         addQueue(root, &Q);
         
-        int level = queueSize(Q);
+        int level = queueSize(Q);   // variabel untuk menyimpan jumlah simpul pada level saat ini
+
+        // loop selama queue tidak kosong
         while(Q.first != NULL) {
-            int i = 0;
-            int spasi = 0;
+            int i = 0;      // variabel iterasi
+            int spasi = 0;  // variabel untuk sum spasi
+
+            // loop mengecek simpul pada level yang sama
             while(i < level) {
-                simpul* bantu = Q.first->node->child;
+                simpul* bantu = Q.first->node->child;   //  pointer untuk menyimpan simpul
                 if(bantu != NULL) {
+                    // jika simpul memiliki simpul anak
+                    // loop menmasukan seluruh anak ke dalam queue
                     while(bantu->sibling != NULL && bantu->sibling != Q.first->node->child) {
                         addQueue(bantu, &Q);
                         bantu = bantu->sibling;
                     }
-                    addQueue(bantu, &Q);
+                    addQueue(bantu, &Q);    // memasukan anak terakhir / pertama jika hanya memiliki satu anak
                 }
+
+                // menghitung banyak seluruh karakter pada bagian nama simpul dan karakter tambahannya
                 int count_root_name = strlen(Q.first->node->kontainer.root_name) + log10(Q.first->node->kontainer.value) + 4;
-                if(spasi < count_root_name) spasi = count_root_name;
-                elemen_list* tunjuk = Q.first->node->kontainer.list_tree.first;
+                if(spasi < count_root_name) {
+                    // jika spasi kurang dari nilau count_root_name
+                    spasi = count_root_name;
+                }
+
+                elemen_list* tunjuk = Q.first->node->kontainer.list_tree.first; // pointer untuk list pada simpul bantu
+                // loop mengecek isi list
                 while(tunjuk != NULL) {
-                    if(spasi < strlen(tunjuk->kontainer.konsekuensi)+2) spasi = strlen(tunjuk->kontainer.konsekuensi)+2;
+                    if(spasi < strlen(tunjuk->kontainer.konsekuensi)+2) {
+                        // jika spasi kurang dari panjang karakter pada list
+                        spasi = strlen(tunjuk->kontainer.konsekuensi)+2;
+                    }
                     tunjuk = tunjuk->next;
                 }
-                delQueue(&Q);
-                i++;
+                delQueue(&Q);   // delete elemen queue sebagai iterasi
+                i++;    // iterasi loop
             }
-            addSpace(spasi+(*L).tail->space, L);
-            level = queueSize(Q);
+            addSpace(spasi+(*L).tail->space, L);    // menambahkan nilai spasi pada masing masing level ke dalam list spasi
+            level = queueSize(Q);                   // reset banyak simpul pada level
         }
-        delSpace(L);
+        delSpace(L);    // menghapus spasi level terakhir karena tidak digunakan
     }
 }
 
@@ -649,12 +688,17 @@ void createQueue(queue *Q) {
 
 // PROSEDUR ADD ELEMEN QUEUE
 void addQueue(simpul* node, queue *Q) {
+    // deklarasi elemen
     elemen_queue* baru = (elemen_queue*) malloc(sizeof(elemen_queue));
-    baru->node = node;
+
+    baru->node = node;  // memasukan node ke dalam queue
     baru->next = NULL;
+
     if((*Q).first == NULL) {
+        // jika queue kosong
         (*Q).first = baru;
     } else {
+        // jika queue tidak kosong
         (*Q).last->next = baru;
     }
     (*Q).last = baru;
@@ -665,9 +709,11 @@ void addQueue(simpul* node, queue *Q) {
 void delQueue(queue *Q) {
     elemen_queue* hapus = (*Q).first;
     if((*Q).first == (*Q).last) {
+        // jika hanya ada satu elemen dalma queue
         (*Q).first = NULL;
         (*Q).last = NULL;
     } else {
+        // jika ada banyak elemen dalam queue
         (*Q).first = (*Q).first->next;
     }
     free(hapus);
@@ -675,11 +721,16 @@ void delQueue(queue *Q) {
 
 // FUNGSI MENGHITUNG BANYAK ELEMEN PADA QUEUE
 int queueSize(queue Q) {
-    int ans = 0;
-    if(Q.first == NULL) return ans;
+    int ans = 0;    // variabel untuk penghitung
+    if(Q.first == NULL) {
+        // jika queue kosong
+        return ans;
+    }
 
+    // loop menghitung banyak elemen
     elemen_queue* bantu = Q.first;
     while(bantu != NULL) {
+        // proses
         bantu = bantu->next;
         ans++;
     }
