@@ -583,7 +583,7 @@ void pruning(simpul* root, char option[]) {
     }
 }
 
-// FUNGSI MENGHITUNG JUMLAH VALUE PADA TREE
+// FUNGSI MENGHITUNG JUMLAH VALUE PADA TREE SETELAH PRUNING
 int sumValue(simpul* root) {
     if(root == NULL) {
         // jika simpul root kosong
